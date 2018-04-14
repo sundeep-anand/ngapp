@@ -1,0 +1,111 @@
+<app-header></app-header>
+
+<mat-drawer-container class="mat-container">
+  <mat-drawer mode="side" opened="true">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/list-page" routerLinkActive="active"> Cases </a>
+      <a mat-list-item href="#"> Create </a>
+      <a mat-list-item href="#"> Admin </a>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="card-container">
+      <mat-card>
+        <mat-card-content>
+            <mat-grid-list cols="6" rowHeight="6:2">
+              <mat-grid-tile>
+                <h5>Status</h5>
+              </mat-grid-tile>
+              <mat-grid-tile><br/>
+                <h5>Country</h5>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                Reset Filters
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="3">
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                  </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="card-container">
+      <div class="example-container mat-elevation-z8">
+        <mat-table #table [dataSource]="dataSource" matSort>
+          
+          <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="IMG">
+              <mat-header-cell *matHeaderCellDef> IMG </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <img src="assets/img/Document-Blank-icon.png" /> </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="firstname">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.firstname}} </mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="lastname">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.lastname}} </mat-cell>
+          </ng-container>
+      
+          <ng-container matColumnDef="birthdate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Birth Date </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.birthdate | date:'MM/dd/yyyy'}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="country">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Country </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.country}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="uncomplete">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Uncomplete </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <div *ngIf="element.uncomplete;then complete else incomplete">here is ignored</div>
+
+                <ng-template #complete><span style="color: green">Complete</span></ng-template>
+                <ng-template #incomplete><span style="color:red">Incomplete</span></ng-template>
+                
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <i class="material-icons">edit</i> </mat-cell>
+          </ng-container>
+      
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+    <div class="card-container">
+      <mat-card>
+        <mat-card-content>
+          <mat-paginator #paginator
+              [pageSize]="3"
+              [pageSizeOptions]="[3, 7, 12]"
+              [showFirstLastButtons]="true">
+            </mat-paginator>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

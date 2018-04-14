@@ -1,0 +1,23 @@
+<div class="signin-content">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p>Hi, welcome! Login to ngapp ...</p>
+        <span>{{ alertText }}</span>
+        <mat-input-container class="full-width-input">
+          <input matInput type="email" placeholder="Email" formControlName="email" required>
+          <mat-error *ngIf="isFieldInvalid('email')">
+            Email Address
+          </mat-error>
+        </mat-input-container>
+        <mat-input-container class="full-width-input">
+          <input matInput type="password" placeholder="Password" formControlName="password" required>
+          <mat-error *ngIf="isFieldInvalid('password')">
+            Password
+          </mat-error>
+        </mat-input-container>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Login</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

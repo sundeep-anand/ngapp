@@ -1,0 +1,25 @@
+@import "./../../theme.scss";
+
+.fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+}
+
+.mat-toolbar{
+    background: white;
+    font-size: small;
+}
+
+.mat-elevation-z5 {
+    position: relative;
+    z-index: 2;
+}
+
+.vertical-divider {
+    border-top-width: 0;
+    border-right-width: 2px;
+    border-right-style: solid;
+    height: 70%;
+    padding: .5em;
+}
