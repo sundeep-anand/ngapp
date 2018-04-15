@@ -1,14 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 
-    MatToolbarModule, MatDividerModule, MatCardModule, MatInputModule, MatButtonModule, MatGridListModule,
-    MatSidenavModule, MatListModule, MatTableModule, MatSortModule, MatPaginatorModule, MatCheckboxModule, 
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatSidenavModule,
+    MatSortModule,
+    MatTableModule,
+    MatToolbarModule,
 } from '@angular/material';
 
 @NgModule({
-    imports: [MatToolbarModule, MatDividerModule, MatCardModule, MatInputModule, MatButtonModule, MatSidenavModule, 
-        MatListModule, MatTableModule, MatSortModule, MatPaginatorModule, MatCheckboxModule, MatGridListModule],
-    exports: [MatToolbarModule, MatDividerModule, MatCardModule, MatInputModule, MatButtonModule, MatSidenavModule, 
-        MatListModule, MatTableModule, MatSortModule, MatPaginatorModule, MatCheckboxModule, MatGridListModule],
+    imports: [MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatDividerModule,
+        MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatNativeDateModule, MatPaginatorModule,
+        MatSidenavModule, MatSortModule, MatTableModule, MatToolbarModule],
+    exports: [MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatDividerModule,
+        MatGridListModule, MatIconModule, MatInputModule, MatListModule, MatNativeDateModule, MatPaginatorModule,
+        MatSidenavModule, MatSortModule, MatTableModule, MatToolbarModule],
 })
 export class MaterialModule { }

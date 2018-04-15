@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { User } from './user';
 
-
+@Injectable()
 export class UserDataService {
 
   users = [
@@ -17,7 +18,14 @@ export class UserDataService {
     { email: 'abc@example.com', firstname: 'First Name 8', lastname: 'Last Name 8', birthdate: new Date(2008, 4, 18), country: 'Thailand', uncomplete: true},
     { email: 'abc@example.com', firstname: 'First Name 9', lastname: 'Last Name 9', birthdate: new Date(2009, 4, 18), country: 'Vietnam', uncomplete: false},
   ];
+
+  private userDataSource = new BehaviorSubject<any>(this.users);
+  currentUsers = this.userDataSource.asObservable();
   
   constructor() { }
+
+  updateUsers(new_users) {
+    this.userDataSource.next(new_users)
+  }
 
 }

@@ -11,7 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { HeaderComponent } from './header/header.component';
-import { ListComponent } from './list/list.component';
+import { ListComponent, DialogUserEditDialog } from './list/list.component';
 import { UserDataService } from './auth/user-data.service';
 
 @NgModule({
@@ -19,7 +19,8 @@ import { UserDataService } from './auth/user-data.service';
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    ListComponent
+    ListComponent,
+    DialogUserEditDialog
   ],
   imports: [
     BrowserModule,
@@ -30,6 +31,7 @@ import { UserDataService } from './auth/user-data.service';
     MaterialModule,
   ],
   providers: [AuthService, AuthGuard, UserDataService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogUserEditDialog]
 })
 export class AppModule { }

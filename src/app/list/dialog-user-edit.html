@@ -1,0 +1,28 @@
+<h3 mat-dialog-title>Edit <strong>{{ selectedUser.firstname }}</strong> Details</h3>
+<h5>{{ description }}</h5>
+<mat-dialog-content [formGroup]="form">
+  
+    <mat-form-field>
+        <input matInput placeholder="{{ selectedUser.firstname ? selectedUser.firstname : 'First Name' }}" formControlName="firstname">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="{{ selectedUser.lastname ? selectedUser.lastname : 'Last Name' }}" formControlName="lastname">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="{{ selectedUser.phone ? selectedUser.phone : 'Phone Number'  }}" formControlName="phone">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="{{ selectedUser.birthdate ? selectedUser.birthdate : 'Birth Date' }}" formControlName="birthdate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button (click)="closeDialog()">Cancel</button>
+    <button type="submit" mat-raised-button class="mat-primary" (click)="updateAccount()" [disabled]="!form.valid">Update Account</button>
+</mat-dialog-actions>
