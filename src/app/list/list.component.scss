@@ -49,3 +49,21 @@
 h5 {
     color: red;
 }
+
+.filterLabelStyle {
+    color: lightgrey;
+    border-bottom: 1px dotted lightgrey;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.text-inside-grid > ::ng-deep figure {
+    text-align: left;
+    justify-content: flex-start;
+    padding-left: 1em;
+}
+
+.filter-button {
+    background: Gainsboro;
+    color: black;
+}

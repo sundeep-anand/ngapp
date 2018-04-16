@@ -19,6 +19,10 @@ export class ListComponent implements OnInit {
 
   selection = new SelectionModel<Element>(true, []);
 
+  statusFilterOptions = ['All Cases', 'Complete', 'Incomplete'];
+  statusFilterLabel: string = this.statusFilterOptions[0];
+  showFilterOptions = [];
+
   constructor(
     private userService: UserDataService,
     private dialog: MatDialog
@@ -62,9 +66,33 @@ export class ListComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
+  applyStatusFilter(filterValue: string) {
+    if (filterValue == this.statusFilterOptions[1]) {
+      this.dataSource.filter = "true";
+    } else if (filterValue == this.statusFilterOptions[2]) {
+      this.dataSource.filter = "false";
+    } else {
+      this.dataSource.filter = "";
+    }
+    this.statusFilterLabel = filterValue;
+  }
+
+  resetFilters() {
+    this.dataSource.filter = false;
+    // reset status filter
+    this.showFilterOptions = [];
+    this.statusFilterLabel = this.statusFilterOptions[0];
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  showStatusFilters() {
+    if (this.showFilterOptions.length != this.statusFilterOptions.length) {
+      this.showFilterOptions.push.apply(this.showFilterOptions, this.statusFilterOptions);
+    }
   }
 
 }

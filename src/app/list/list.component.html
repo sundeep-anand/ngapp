@@ -13,19 +13,27 @@
       <mat-card>
         <mat-card-content>
             <mat-grid-list cols="6" rowHeight="6:2">
-              <mat-grid-tile>
-                <h5>Status</h5>
+              <mat-grid-tile class="text-inside-grid">
+                <div>
+                  <h5>Status</h5>
+                  <a class="filterLabelStyle" (click)="showStatusFilters()">{{ statusFilterLabel }}</a>
+                </div>
               </mat-grid-tile>
               <mat-grid-tile><br/>
                 <h5>Country</h5>
               </mat-grid-tile>
               <mat-grid-tile>
-                Reset Filters
+                  <a class="filterLabelStyle" (click)="resetFilters()">Reset Filters</a>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="3">
                   <mat-form-field>
                     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
                   </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="6" class="text-inside-grid">
+                <span *ngFor="let filter of showFilterOptions">
+                   <button mat-button class="filter-button" (click)="applyStatusFilter(filter)">{{ filter }}</button> &nbsp;
+                </span>
               </mat-grid-tile>
             </mat-grid-list>
         </mat-card-content>
