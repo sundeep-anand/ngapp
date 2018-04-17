@@ -12,7 +12,7 @@
     <div class="card-container">
       <mat-card>
         <mat-card-content>
-            <mat-grid-list cols="6" rowHeight="6:2">
+            <mat-grid-list cols="6" rowHeight="6:2.5">
               <mat-grid-tile class="text-inside-grid">
                 <div>
                   <h5>Status</h5>
@@ -20,7 +20,10 @@
                 </div>
               </mat-grid-tile>
               <mat-grid-tile><br/>
-                <h5>Country</h5>
+                <div>
+                  <h5>Country</h5>
+                  <a class="filterLabelStyle" (click)="showAlphabets()">{{ countrySelectCount }} Countries</a>
+                </div>
               </mat-grid-tile>
               <mat-grid-tile>
                   <a class="filterLabelStyle" (click)="resetFilters()">Reset Filters</a>
@@ -31,9 +34,14 @@
                   </mat-form-field>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="6" class="text-inside-grid">
-                <span *ngFor="let filter of showFilterOptions">
-                   <button mat-button class="filter-button" (click)="applyStatusFilter(filter)">{{ filter }}</button> &nbsp;
-                </span>
+                <div>
+                  <span *ngFor="let alphabet of alphabets">
+                    <a (click)="showCountries(alphabet)" class="letter">{{ alphabet }}</a> &nbsp;
+                  </span><br/>
+                  <span *ngFor="let filter of showFilterOptions">
+                    <button mat-button class="filter-button" (click)="applyStatusFilter(filter)">{{ filter }}</button> &nbsp;
+                  </span>
+                </div>
               </mat-grid-tile>
             </mat-grid-list>
         </mat-card-content>
