@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserDataService } from './../auth/user-data.service';
+
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { UserDataService } from './../auth/user-data.service';
+import { EditComponent } from './../edit/edit.component';
 
 @Component({
   selector: 'app-list',
@@ -33,7 +36,7 @@ export class ListComponent implements OnInit {
   }
 
   openDialog(selectedUser): void {
-    let dialogRef = this.dialog.open(DialogUserEditDialog, {
+    let dialogRef = this.dialog.open(EditComponent, {
       width: '400px',
       data: { users: this.users, title: 'User Details', user: selectedUser },
     });
@@ -65,61 +68,6 @@ export class ListComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
-
-}
-
-@Component({
-  selector: 'dialog-user-edit',
-  templateUrl: 'dialog-user-edit.html',
-})
-export class DialogUserEditDialog implements OnInit {
-
-  form: FormGroup;
-  description: string;
-  selectedUser: string;
-  allUpdatedUsers = [];
-  private users;
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogUserEditDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: FormBuilder,
-    private userService: UserDataService,
-    private router: Router) { 
-      this.description = data.title;
-      this.selectedUser = data.user;
-      this.allUpdatedUsers = data.users;
-    }
-
-  ngOnInit() {
-    this.userService.currentUsers.subscribe(users => this.users = users)
-    this.form = this.formBuilder.group({
-      firstname: ['', [Validators.required]],
-      lastname: ['', [Validators.required]],
-      phone: ['', [Validators.required, Validators.pattern("^[+]?[0-9]{8,15}$")]],
-      birthdate: ['', [Validators.required]],
-    })
-  }
-
-  updateAccount() {
-    if (this.form.valid) {
-      var index = this.allUpdatedUsers.indexOf(this.selectedUser);
-      this.allUpdatedUsers[index].firstname = this.form.value.firstname;
-      this.allUpdatedUsers[index].lastname = this.form.value.lastname;
-      this.allUpdatedUsers[index].phone = this.form.value.phone;
-      this.allUpdatedUsers[index].birthdate = this.form.value.birthdate;
-      this.userService.updateUsers(this.allUpdatedUsers);
-      this.dialogRef.close();
-    }
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  closeDialog(): void {
-    this.dialogRef.close();
   }
 
 }

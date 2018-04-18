@@ -3,19 +3,19 @@
 <mat-dialog-content [formGroup]="form">
   
     <mat-form-field>
-        <input matInput placeholder="{{ selectedUser.firstname ? selectedUser.firstname : 'First Name' }}" formControlName="firstname">
+        <input matInput value="{{ selectedUser.firstname }}" placeholder="First Name" formControlName="firstname">
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput placeholder="{{ selectedUser.lastname ? selectedUser.lastname : 'Last Name' }}" formControlName="lastname">
+        <input matInput value="{{ selectedUser.lastname }}" placeholder="Last Name" formControlName="lastname">
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput placeholder="{{ selectedUser.phone ? selectedUser.phone : 'Phone Number'  }}" formControlName="phone">
+        <input matInput value="{{ selectedUser.phone  }}" placeholder="Phone Number" formControlName="phone">
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="{{ selectedUser.birthdate ? selectedUser.birthdate : 'Birth Date' }}" formControlName="birthdate">
+        <input matInput [matDatepicker]="picker" value="{{ selectedUser.birthdate | date:'MM/dd/yyyy' }}" placeholder="Birth Date" formControlName="birthdate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>

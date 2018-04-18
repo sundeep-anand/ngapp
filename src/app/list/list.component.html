@@ -23,7 +23,7 @@
                 Reset Filters
               </mat-grid-tile>
               <mat-grid-tile [colspan]="3">
-                  <mat-form-field>
+                  <mat-form-field class="full-length">
                     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
                   </mat-form-field>
               </mat-grid-tile>
@@ -32,7 +32,7 @@
       </mat-card>
     </div>
     <div class="card-container">
-      <div class="example-container mat-elevation-z8">
+      <div class="table-container mat-elevation-z8">
         <mat-table #table [dataSource]="dataSource" matSort>
           
           <ng-container matColumnDef="select">

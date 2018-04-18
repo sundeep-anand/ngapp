@@ -11,8 +11,10 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { HeaderComponent } from './header/header.component';
-import { ListComponent, DialogUserEditDialog } from './list/list.component';
+import { ListComponent } from './list/list.component';
 import { UserDataService } from './auth/user-data.service';
+import { EditComponent } from './edit/edit.component';
+import { CountryComponent } from './country/country.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { UserDataService } from './auth/user-data.service';
     LoginComponent,
     HeaderComponent,
     ListComponent,
-    DialogUserEditDialog
+    EditComponent,
+    CountryComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +35,6 @@ import { UserDataService } from './auth/user-data.service';
   ],
   providers: [AuthService, AuthGuard, UserDataService],
   bootstrap: [AppComponent],
-  entryComponents: [DialogUserEditDialog]
+  entryComponents: [EditComponent]
 })
 export class AppModule { }
