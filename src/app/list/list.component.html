@@ -1,36 +1,42 @@
 <app-header></app-header>
 
 <mat-drawer-container class="mat-container">
-  <mat-drawer mode="side" opened="true">
-    <mat-nav-list>
-      <a mat-list-item routerLink="/list-page" routerLinkActive="active"> Cases </a>
-      <a mat-list-item href="#"> Create </a>
-      <a mat-list-item href="#"> Admin </a>
+  <mat-drawer mode="side" opened="true" role="navigation">
+    <mat-nav-list role="list">
+      <a mat-list-item routerLink="/list-page" routerLinkActive="active" role="listitem"> Cases </a>
+      <a mat-list-item href="#" role="listitem"> Create </a>
+      <a mat-list-item href="#" role="listitem"> Admin </a>
     </mat-nav-list>
   </mat-drawer>
-  <mat-drawer-content>
+  <mat-drawer-content role="region">
     <div class="card-container">
-      <mat-card>
-        <mat-card-content>
-            <mat-grid-list cols="6" rowHeight="6:2">
-              <mat-grid-tile>
-                <h5>Status</h5>
+      <mat-card role="region">
+        <mat-card-content role="region">
+            <mat-grid-list cols="5" rowHeight="5:1.4">
+              <mat-grid-tile class="text-inside-grid">
+                <div>
+                  <h5>Status</h5>
+                  <a class="filterLabelStyle" (click)="showStatusFilters()">{{ statusFilterLabel }}</a>
+                </div>
               </mat-grid-tile>
-              <mat-grid-tile><br/>
-                <h5>Country</h5>
-              </mat-grid-tile>
               <mat-grid-tile>
-                Reset Filters
+                <a class="filterLabelStyle" (click)="resetFilters()">Reset Filters</a>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="3">
-                  <mat-form-field class="full-length">
-                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-                  </mat-form-field>
+                <mat-form-field class="full-length">
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="5" class="text-inside-grid">
+                <span *ngFor="let filter of showFilterOptions">
+                  <button class="btn {{ filter == statusFilterLabel ? 'active' : '' }}" (click)="applyStatusFilter(filter)">{{ filter }}</button> &nbsp;
+                </span>
               </mat-grid-tile>
             </mat-grid-list>
         </mat-card-content>
       </mat-card>
     </div>
+    <app-country></app-country>
     <div class="card-container">
       <div class="table-container mat-elevation-z8">
         <mat-table #table [dataSource]="dataSource" matSort>
@@ -75,10 +81,10 @@
             <mat-cell *matCellDef="let element"> {{element.country}} </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="uncomplete">
+          <ng-container matColumnDef="status">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Uncomplete </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <div *ngIf="element.uncomplete;then complete else incomplete">here is ignored</div>
+                <div *ngIf="element.status=='Complete';then complete else incomplete">here is ignored</div>
 
                 <ng-template #complete><span style="color: green">Complete</span></ng-template>
                 <ng-template #incomplete><span style="color:red">Incomplete</span></ng-template>

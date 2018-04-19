@@ -1,3 +1,30 @@
-<p>
-  country works!
-</p>
+<div class="card-container">
+  <mat-card>
+    <mat-card-content>
+        <mat-grid-list cols="5" rowHeight="5:1.2">
+            <mat-grid-tile class="text-inside-grid">
+              <div>
+                <h5>Country</h5>
+                <a class="filterLabelStyle" (click)="showAlphabets()">{{ countrySelectCount }} Countries</a>
+              </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <a class="filterLabelStyle" (click)="resetFilters()">Reset Filters</a>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="3">
+              &nbsp;
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="5" class="text-inside-grid">
+              <span *ngFor="let alphabet of alphabets">
+                <a (click)="showCountries(alphabet)" class="letter">{{ alphabet }}</a> &nbsp;
+              </span>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="5" class="text-inside-grid">
+              <span *ngFor="let filter of showFilterOptions">
+                <button class="btn {{ filter == statusFilterLabel ? 'active' : '' }}" (click)="applyCountryFilter(filter)">{{ filter }}</button> &nbsp;
+              </span>
+            </mat-grid-tile>
+          </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+</div>

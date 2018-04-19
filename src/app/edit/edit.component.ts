@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
@@ -22,8 +21,7 @@ export class EditComponent implements OnInit {
     public dialogRef: MatDialogRef<EditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
-    private userService: UserDataService,
-    private router: Router
+    private userService: UserDataService
   ) { 
       this.description = data.title;
       this.selectedUser = data.user;
@@ -31,7 +29,7 @@ export class EditComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.userService.currentUsers.subscribe(users => this.users = users)
+      this.userService.currentLocalUsers.subscribe(users => this.users = users)
       this.form = this.formBuilder.group({
         firstname: ['', [Validators.required]],
         lastname: ['', [Validators.required]],
