@@ -12,7 +12,7 @@
     <div class="card-container">
       <mat-card role="region">
         <mat-card-content role="region">
-            <mat-grid-list cols="6" rowHeight="6:2">
+            <mat-grid-list cols="6" rowHeight="6:1.4">
               <mat-grid-tile class="text-inside-grid">
                 <div>
                   <h5>Status</h5>
@@ -33,17 +33,24 @@
                   <input matInput (keyup)="applySearchFilter($event.target.value)" placeholder="Search">
                 </mat-form-field>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="6" class="text-inside-grid">
+              <mat-grid-tile [colspan]="6" rowspan="2.5" class="text-inside-grid">
                 <div>
-                  <span *ngFor="let alphabet of alphabets">
-                    <a (click)="showCountries(alphabet)" class="letter">{{ alphabet }}</a> &nbsp;
-                  </span>
+                  <div>
+                    <span *ngFor="let alphabet of alphabets">
+                      <a (click)="showCountries(alphabet)" class="letter">{{ alphabet }}</a> &nbsp;
+                    </span>
+                  </div>
                   <div>
                     <span *ngFor="let filter of showStatusFilterOptions">
                       <button class="btn {{ filter == statusFilterLabel ? 'active' : '' }}" (click)="applyStatusFilter(filter)">{{ filter }}</button> &nbsp;
                     </span>
                     <span *ngFor="let filter of showCountryFilterOptions">
                       <button class="btn" (click)="applyCountryFilter(filter)">{{ filter }}</button> &nbsp;
+                    </span>
+                  </div>
+                  <div>
+                    <span *ngFor="let country of countrySelectList">
+                      {{ country }}<button mat-icon-button (click)="removeCountryFilter(country)"><mat-icon>cancel</mat-icon></button>&nbsp;
                     </span>
                   </div>
                 </div>

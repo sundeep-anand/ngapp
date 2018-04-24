@@ -13,4 +13,5 @@ Components based structure makes it scalable. Each component can grow independen
 #### Improvements
  * Login Component
     * `Invalid Email/Password` error message
- * Country Filter: Multicountry select
+ * Some more UI polishing, Mobile responsive
+ * Code cleanup

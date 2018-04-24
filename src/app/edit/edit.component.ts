@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { UserDataService } from './../auth/user-data.service';
+import { User } from './../auth/user';
 
 @Component({
   selector: 'app-edit',
@@ -13,7 +14,7 @@ export class EditComponent implements OnInit {
 
   form: FormGroup;
   description: string;
-  selectedUser: string;
+  selectedUser: User;
   allUpdatedUsers = [];
   private users;
 

@@ -10,6 +10,7 @@ import { EditComponent } from './../edit/edit.component';
 
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Rx';
+import { filter } from 'rxjs/operator/filter';
 
 @Component({
   selector: 'app-list',
@@ -19,7 +20,7 @@ import { Observable } from 'rxjs/Rx';
 export class ListComponent implements OnInit {
   displayedColumns = ['select', 'IMG', 'firstname', 'lastname', 'birthdate', 'country', 'status', 'actions'];
   private users;
-  private dataSource;
+  public dataSource;
 
   dialogExitResult: string;
 
@@ -62,6 +63,7 @@ export class ListComponent implements OnInit {
     z: ['Zambia', 'Zimbabwe'],
   };
 
+  countrySelectList = [];
   countrySelectCount: number = 0;
 
   constructor(
@@ -73,20 +75,43 @@ export class ListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
-    // Uncomment next two lines and comment last three lines to connect local data
+    // Uncomment next lines and comment last three lines to connect local data
     this.userService.currentLocalUsers.subscribe(users => this.users = users);
     this.dataSource = new MatTableDataSource<any>(this.users);
     this.dataSource.filterPredicate = 
       (data: User, filters: string) => {
         const matchFilter = [];
-        const filterArray = filters.split(',');
+        const matchFilterCountries = [];
+
+        if (filters === "|" || filters === ",|") { return matchFilter; }
+        
+        var filterArray = []
+        var filterCountries = []
+
+        var filterSegments = filters.split('|');
+        if (filterSegments.length == 2) {
+          filterArray = filterSegments[0].split(',');
+          filterCountries = filterSegments[1].split(',');
+        } else {
+          filterArray = filterSegments;
+        }
+
         const columns = [data.status, data.country, data.firstname, data.lastname];
         filterArray.forEach(filter => { if (filter) {
           const customFilter = [];
-          columns.forEach(column =>  customFilter.push(column.toLowerCase() === filter)  );
+          columns.forEach(column =>  customFilter.push(column.toLowerCase() === filter));
           matchFilter.push(customFilter.some(Boolean));
         }});
-        return matchFilter.every(Boolean);
+
+        filterCountries.forEach(filter => { if (filter) {
+          const tempFilter = [];
+          tempFilter.push(data.country.toLowerCase() === filter);
+          matchFilterCountries.push(tempFilter.some(Boolean));
+        }})
+        
+        // return matchFilter.every(Boolean);
+        return matchFilter.concat(matchFilterCountries).some(Boolean);
+        
       }
 
     // this.userService.usersObservable.subscribe( res => { this.users = res; } );
@@ -123,12 +148,14 @@ export class ListComponent implements OnInit {
   }
 
   applyFilter() {
-    this.dataSource.filter = this.userService.usersFilterSet.join(",");
+    this.dataSource.filter = [
+      this.userService.usersFilterSet.join(","),
+      this.countrySelectList.join(",")
+    ].join("|");
   }
 
   applySearchFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
+    filterValue = filterValue.trim().toLowerCase();
     if (filterValue) { 
       this.userService.usersFilterSet[0] = filterValue;
     } else {
@@ -143,8 +170,7 @@ export class ListComponent implements OnInit {
     if (filterValue == this.statusFilterOptions[0]) {
       this.userService.usersFilterSet[1] = "";
     } else {
-      filterValue = filterValue.trim();
-      filterValue = filterValue.toLowerCase();
+      filterValue = filterValue.trim().toLowerCase();
       if (filterValue) {
         this.userService.usersFilterSet[1] = filterValue;
       }
@@ -184,11 +210,20 @@ export class ListComponent implements OnInit {
 
   applyCountryFilter(filterValue: string) {
     // this.userService.filterByCountry(filterValue);
-    this.countrySelectCount = 1;
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    if (filterValue) {
-      this.userService.usersFilterSet[2] = filterValue;
+    filterValue = filterValue.trim().toLowerCase();
+    if (filterValue && !this.countrySelectList.includes(filterValue)) {
+      this.countrySelectList.push(filterValue);
+      this.countrySelectCount = this.countrySelectList.length;
+    }
+    this.applyFilter();
+  }
+
+  removeCountryFilter(countryName: string) {
+    countryName = countryName.trim().toLowerCase();
+    if (countryName && this.countrySelectList.includes(countryName)) {
+      var index = this.countrySelectList.indexOf(countryName);
+      this.countrySelectList.splice(index, 1);
+      this.countrySelectCount = this.countrySelectList.length;
     }
     this.applyFilter();
   }
@@ -196,14 +231,14 @@ export class ListComponent implements OnInit {
   resetFilters() {
     // this.userService.filterByStatus(null);
     // this.userService.filterByCountry(null);
-    // reset status filter
+    // reset filters: status and country
     this.alphabets = [];
     this.showStatusFilterOptions = [];
     this.showCountryFilterOptions = [];
     this.countrySelectCount = 0;
     this.statusFilterLabel = this.statusFilterOptions[0];
     this.userService.usersFilterSet[1] = "";
-    this.userService.usersFilterSet[2] = "";
+    this.countrySelectList = [];
     this.applyFilter();
   }
 
