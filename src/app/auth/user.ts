@@ -6,5 +6,5 @@ export class User {
     birthdate: Date;
     country: string;
     phone: string;
-    uncomplete: boolean;
+    status: string;
 }

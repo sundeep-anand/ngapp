@@ -76,3 +76,16 @@ h5 {
     background: black;
     color: snow;
 }
+
+.letter {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: Gainsboro !important;
+    cursor: pointer;
+}

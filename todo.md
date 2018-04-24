@@ -13,7 +13,4 @@ Components based structure makes it scalable. Each component can grow independen
 #### Improvements
  * Login Component
     * `Invalid Email/Password` error message
- * Integrate firebase observable with mat-table-data-source
- * Country Filter: Multicountry select: two options
-    * Merge observable of individual query for each country together and combine with status query observable (costly)
-    * Followup with https://github.com/firebase/firebase-js-sdk/issues/321
+ * Country Filter: Multicountry select

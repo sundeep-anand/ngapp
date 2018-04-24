@@ -14,11 +14,12 @@ import { User } from './user';
 export class UserDataService {
 
   usersObservable: Observable<any[]>;
+  public usersFilterSet = [];     // [0] Search Filter [1] Status Filter [2] Country Filter
   
   statusFilter: BehaviorSubject<string|null>;
   countryFilter: BehaviorSubject<string|null>;
 
-  // this data has been uploaded to firebase.io (Cloud Firestore)
+  // this data has also been uploaded to firebase.io (Cloud Firestore)
   users = [
     { email: 'abc0@example.com', firstname: 'First Name 0', lastname: 'Last Name 0', birthdate: new Date(2000, 4, 18), country: 'Singapore', status: 'Complete'},
     { email: 'abc1@example.com', firstname: 'First Name 1', lastname: 'Last Name 1', birthdate: new Date(2001, 4, 18), country: 'Japan', status: 'Incomplete'},

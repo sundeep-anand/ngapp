@@ -12,11 +12,17 @@
     <div class="card-container">
       <mat-card role="region">
         <mat-card-content role="region">
-            <mat-grid-list cols="5" rowHeight="5:1.4">
+            <mat-grid-list cols="6" rowHeight="6:2">
               <mat-grid-tile class="text-inside-grid">
                 <div>
                   <h5>Status</h5>
                   <a class="filterLabelStyle" (click)="showStatusFilters()">{{ statusFilterLabel }}</a>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile class="text-inside-grid">
+                <div>
+                  <h5>Country</h5>
+                  <a class="filterLabelStyle" (click)="showAlphabets()">{{ countrySelectCount }} Countries</a>
                 </div>
               </mat-grid-tile>
               <mat-grid-tile>
@@ -24,19 +30,29 @@
               </mat-grid-tile>
               <mat-grid-tile [colspan]="3">
                 <mat-form-field class="full-length">
-                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                  <input matInput (keyup)="applySearchFilter($event.target.value)" placeholder="Search">
                 </mat-form-field>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="5" class="text-inside-grid">
-                <span *ngFor="let filter of showFilterOptions">
-                  <button class="btn {{ filter == statusFilterLabel ? 'active' : '' }}" (click)="applyStatusFilter(filter)">{{ filter }}</button> &nbsp;
-                </span>
+              <mat-grid-tile [colspan]="6" class="text-inside-grid">
+                <div>
+                  <span *ngFor="let alphabet of alphabets">
+                    <a (click)="showCountries(alphabet)" class="letter">{{ alphabet }}</a> &nbsp;
+                  </span>
+                  <div>
+                    <span *ngFor="let filter of showStatusFilterOptions">
+                      <button class="btn {{ filter == statusFilterLabel ? 'active' : '' }}" (click)="applyStatusFilter(filter)">{{ filter }}</button> &nbsp;
+                    </span>
+                    <span *ngFor="let filter of showCountryFilterOptions">
+                      <button class="btn" (click)="applyCountryFilter(filter)">{{ filter }}</button> &nbsp;
+                    </span>
+                  </div>
+                </div>
               </mat-grid-tile>
             </mat-grid-list>
         </mat-card-content>
       </mat-card>
     </div>
-    <app-country></app-country>
+    <!-- <app-country></app-country> -->
     <div class="card-container">
       <div class="table-container mat-elevation-z8">
         <mat-table #table [dataSource]="dataSource" matSort>
@@ -82,12 +98,12 @@
           </ng-container>
 
           <ng-container matColumnDef="status">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Uncomplete </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <div *ngIf="element.status=='Complete';then complete else incomplete">here is ignored</div>
+                <div *ngIf="element.status=='Complete';then complete else incomplete">Status</div>
 
-                <ng-template #complete><span style="color: green">Complete</span></ng-template>
-                <ng-template #incomplete><span style="color:red">Incomplete</span></ng-template>
+                <ng-template #complete><span style="color: green">{{element.status}}</span></ng-template>
+                <ng-template #incomplete><span style="color:red">{{element.status}}</span></ng-template>
                 
             </mat-cell>
           </ng-container>
